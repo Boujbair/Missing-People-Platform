@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="../static/css/main.css">
+  <title>Login Page</title>
+</head>
+
+<body>
+  <nav class="#7e57c2 deep-purple lighten-1">
+    <div class="nav-wrapper container">
+      <img class="responsive-img hoverable" style="margin-top: 6px;" width="30" height="50"
+        src="../images/missing.png" />
+
+
+      <ul id="nav-mobile" class="right">
+        <li class="logged-in" style="display: none;">
+          <a href="#" class="nav-link white-text modal-trigger hoverable " data-target="modal-account">Account</a>
+        </li>
+
+        <li class="logged-in" style="display: none;">
+          <a href="#" class="nav-link white-text modal-trigger hoverable" data-target="modal-add">Add Person</a>
+        </li>
+        <li class="logged-in" style="display: none;">
+          <a href="#" class="nav-link white-text modal-trigger hoverable" data-target="modal-find">File A Sightening</a>
+        </li>
+        <li class="logged-out" style="display: none;">
+          <a href="#" class="nav-link white-text modal-trigger hoverable" data-target="modal-login">Login</a>
+        </li>
+        <li class="logged-out" style="display: none;">
+          <a href="#" class="nav-link white-text modal-trigger hoverable" data-target="modal-signup">Sign up</a>
+        </li>
+        <li class="logged-in" style="display: none;">
+          <a href="#" class="nav-link white-text hoverable" id="logout">Logout</a>
+        </li>
+        </span>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- SIGN UP MODAL -->
+  <div id="modal-signup" class="modal">
+    <div class="modal-content">
+      <h4>Sign up</h4><br />
+      <form id="signup-form">
+        <div class="input-field">
+          <input type="text" id="signup-name" required />
+          <label for="signup-name">Enter your name</label>
+        </div>
+        <div class="input-field">
+          <input type="email" id="signup-email" required />
+          <label for="signup-email">Email address</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="signup-password" required />
+          <label for="signup-password">Choose password</label>
+        </div>
+
+        <button class="btn blue darken-2 z-depth-0">Sign up</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div id="modal-login" class="modal">
+    <div class="modal-content">
+      <h4>Login</h4><br />
+      <form id="login-form">
+        <div class="input-field">
+          <input type="email" id="login-email" required />
+          <label for="login-email">Email address</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="login-password" required />
+          <label for="login-password">Your password</label>
+        </div>
+
+        <button class="btn blue darken-2 z-depth-0">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ACCOUNT MODAL -->
+  <div id="modal-account" class="modal">
+    <div class="modal-content center-align">
+      <h4>Account details</h4><br />
+      <div class="account-details"></div>
+    </div>
+  </div>
+
+  <!-- CREATE ADD PERSON MODAL -->
+  <div id="modal-add" class="modal">
+    <div class="modal-content">
+      <h4>Add a Missing Person</h4><br />
+      <form method="post" id="add-form">
+        <div class="input-field">
+          <input type="text" id="first-name" name="first-name">
+          <label for="first-name">First Name</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="last-name">
+          <label for="last-name">Last Name</label>
+        </div>
+        <div class="input-field">
+          <input type="number" id="age">
+          <label for="age">Age</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="last-seen">
+          <label for="last-seen">Where and when was the person last seen ?</label>
+        </div>
+        <div class="input-field">
+          <input type="date" id="birth-date">
+          <label for="birth-date">Date of Birth</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="birth-place">
+          <label for="birth-place">Place of Birth</label>
+        </div>
+        <div class="input-field">
+          <input type="number" id="taille">
+          <label for="taille">Height</label>
+        </div>
+        <div class="input-field">
+          <label for="person-image">Upload an image of the missing person</label><br><br>
+          <input type="file" id="person-image" accept="image/png, image/jpeg, image/jpg">
+        </div>
+        <div class="input-field">
+          <textarea id="description" class="materialize-textarea"></textarea>
+          <label for="description">Describe the missing person:</label>
+        </div>
+
+
+        <button type="submit" class="btn blue darken-2 z-depth-0 hoverable">Add</button>
+
+
+      </form>
+    </div>
+  </div>
+
+  <!-- CREATE FIND PERSON MODAL -->
+  <div id="modal-find" class="modal">
+    <div class="modal-content">
+      <h4>Enter the available information of the suspected person:</h4><br />
+      <form action="/match" method="post" id="find-form" enctype="multipart/form-data">
+        <div class="input-field">
+          <input type="text" id="first-name-find" name="first-name-find">
+          <label for="first-name-find">First Name If Known</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="last-name-find" name="last-name-find">
+          <label for="last-name-find">Last Name If Known</label>
+        </div>
+        <div class="input-field">
+          <input type="number" id="age-find">
+          <label for="age-find">Age (If Not Known Give An Estimation)</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="adress-find">
+          <label for="adress-find">Town, Adress, Origins Or Any Related Information</label>
+        </div>
+        <div class="input-field">
+          <input type="number" id="taille-find">
+          <label for="taille-find">Height or An Estimation of Height</label>
+        </div>
+        <div class="input-field">
+          <label for="person-image-find">Do You Have An Image Of The Person ? If Yes, Upload It Please</label><br><br>
+          <!-- <input type="file" id="person-image-find" name="img-find"> -->
+          <input type="file" id="person-image-find" name="img-find" accept="image/png, image/jpeg, image/jpg">
+        </div>
+        <div class="input-field">
+          <textarea id="description-find" class="materialize-textarea"></textarea>
+          <label for="description-find">Give a detailed description of the Person Looks (Skin, Eyes, , Hair , Marks, etc
+            ):</label>
+        </div>
+        <button type="submit" name="find-submit" class="btn blue darken-2 z-depth-0">Find Match</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Landing Page -->
+  <div class="logged-out-container" style="display: none;">
+    <section class="banner">
+      <div class="row">
+        <div class="banner-left col m7 s12">
+          <img src="../images/banner-bg.svg" alt="" class="banner-img">
+        </div>
+        <div class="banner-right col m5 s12">
+          <h1>Collaborate In Finding People's Missing Close Ones</h1>
+          <h2>Did you see someone, and you suspect them to be missing ? Help us in reuniting them with their families
+          </h2>
+          <p>Sign up now and fill the form</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MISSING LIST -->
+  <div class="container" style="margin-top: 40px;">
+    <div class="missing" style="border: none;">
+
+    </div>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-storage-compat.js"></script>
+  <script>
+    // Import the functions you need from the SDKs you need
+    // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js";
+    // import { getAuth } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-auth.js";
+    // import { getFirestore } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-firestore.js";
+    // import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAtS-Kb8soisgyv7EUOIMrvtgahLsP7OZM",
+      authDomain: "mpf-ai.firebaseapp.com",
+      databsaeURL: "https://mpf-ai.firebaseio.com",
+      projectId: "mpf-ai",
+      storageBucket: "mpf-ai.appspot.com",
+      messagingSenderId: "882361933923",
+      appId: "1:882361933923:web:7f28fdfad13d8137d2d856",
+      measurementId: "G-Q49RG7FE7Y"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    // make auth and firestore references
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    var storage = firebase.storage();
+    var storageRef = storage.ref();
+
+
+            // Initialize Firebase
+            // const firebaseApp = initializeApp(firebaseConfig);
+
+            // const app = initializeApp(firebaseConfig);
+            // const auth = getAuth(firebaseApp);
+            // const db = getFirestore(firebaseApp);
+            // const analytics = getAnalytics(firebaseApp);
+            // export { auth };
+            // db.settings({ timestampsInSnapshots: true });
+  </script>
+  
+  
+  <!-- <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import {getDatabase} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDpsiFQOYIqwQrvFWXyzAmQfjiHAtyO6b4",
+      authDomain: "missing-peaople.firebaseapp.com",
+      databaseURL: "https://missing-peaople-default-rtdb.firebaseio.com",
+      projectId: "missing-peaople",
+      storageBucket: "missing-peaople.appspot.com",
+      messagingSenderId: "430961131355",
+      appId: "1:430961131355:web:2566895f661bf50e9ea47e"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+  </script> -->
+  
+  
+  
+  
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="../static/js/auth.js"></script>
+  <script src="../static/js/index.js"></script>
+  <!-- <script type="text/javascript">
+          $(document).on('submit','#find-form',function(e){
+            e.preventDefault();
+            // $.ajax({
+            //   type:'POST',
+            //   url:'/',
+            //   data:{
+            //     firstName:$("#first-name-find").val(),
+            //     lastName:$("#last-name-find").val(),
+            //     personImg:$("#person-img-find")
+            //   },
+            //   success:function()
+            //   {
+            //     // alert('saved');
+            //   }
+            // })
+          });
+        </script> -->
+</body>
+
+</html>
